@@ -1,5 +1,13 @@
 <template>
-  <div class="home">测试</div>
+  <div class="container">
+    <div class="nav">
+      <div v-for="item in 10" :key="item" class="nav-item" flex>
+        <div mr-10>{{ item }}</div>
+        <div>{{ item }}</div>
+      </div>
+    </div>
+    <div class="main"></div>
+  </div>
 </template>
 
 <script lang="ts">
