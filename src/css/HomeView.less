@@ -1,0 +1,101 @@
+
+.border {
+  border: 1px solid;
+  border-radius: 3px;
+}
+.box {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
+}
+.nav {
+  &:extend(.border);
+  width: 130px;
+  padding: 5px;
+  visibility: hidden;
+}
+.nav_item {
+  &:extend(.border);
+  display: flex;
+  line-height: 30px;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin-bottom: 5px;
+  .nav_item_text {
+    font-size: 14px;
+  }
+  .nav_item_close {
+  }
+}
+//  右侧
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+.title {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+//  对话区域
+.conversation-x {
+  &:extend(.border);
+  flex: 1;
+  min-height: 400px;
+  margin-bottom: 20px;
+}
+.conversation_item {
+  display: flex;
+  padding: 20px;
+  gap: 10px;
+  .avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+  }
+  .chat {
+    width: 80%;
+    line-height: 20px;
+    border-radius: 5px;
+  }
+  &-left {
+    .chat {
+      background: #ccc;
+    }
+  }
+  &-right {
+    flex-direction: row-reverse;
+    .avatar {
+      background: rgb(51, 116, 153);
+    }
+    .chat {
+      background: rgb(51, 116, 153);
+    }
+  }
+}
+// 输入区
+.input-x {
+  &:extend(.border);
+  display: flex;
+  padding-right: 10px;
+}
+.input {
+  flex: 1;
+  padding: 5px;
+  min-height: 30px;
+  &:focus-visible {
+    outline: none;
+  }
+}
+.send {
+  color: green;
+  font-size: 26px;
+  display: flex;
+  align-items: flex-end;
+}
