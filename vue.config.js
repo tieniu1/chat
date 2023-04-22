@@ -8,4 +8,16 @@ module.exports = defineConfig({
       realContentHash: true,
     },
   },
+  devServer: {
+    proxy: {
+      "/api": {
+        target: "https://api.openai.com", // 修改为实际的后端接口地址
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          "^/api": "",
+        },
+      },
+    },
+  },
 });

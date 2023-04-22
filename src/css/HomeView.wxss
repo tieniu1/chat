@@ -44,6 +44,7 @@
   flex: 1;
   min-height: 400px;
   margin-bottom: 20px;
+  overflow-y: auto;
 }
 .conversation_item {
   display: flex;
@@ -58,8 +59,10 @@
 }
 .conversation_item .chat {
   width: 80%;
-  line-height: 20px;
+  line-height: 40px;
   border-radius: 5px;
+  padding: 0 10px;
+  font-size: 14px;
 }
 .conversation_item-left .chat {
   background: #ccc;
@@ -72,6 +75,7 @@
 }
 .conversation_item-right .chat {
   background: #337499;
+  color: #fff;
 }
 .input-x {
   display: flex;
@@ -90,4 +94,5 @@
   font-size: 26px;
   display: flex;
   align-items: flex-end;
+  cursor: pointer;
 }
