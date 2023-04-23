@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+<link rel="stylesheet" href="./lib/highlight/default.min.css">
+  <script src="./lib/showdown/showdown.min.js"></script>
+  <script src="./lib/highlight/highlight.min.js"></script>
+  <!-- <script src="./lib/xss/xss.js"></script> -->
+</head>
+<body>
+  <button id="send" onclick="send()">开始</button>
+  <button id="abort" onclick="abortFetch()">结束</button>
+
+  <div id="app"></div>
+</body>
+
+<script>
+  const BASE_URL = "http://localhost:3000";
+
+  const app = document.getElementById("app");
+  let controller = new AbortController();
+
+  const converter = new showdown.Converter()
+
+  async function  getData(url,data={}) {
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+ KEY
+        },
+        signal: controller.signal
+    })
+
+    //获取UTF8的解码
+    const encode = new TextDecoder("utf-8");
+    //获取body的reader
+	  const reader = response.body.getReader();
+    let allText = '';
+
+    while (true) {
+      const {done,value} = await reader.read();
+      console.log('value---',value);
+      // 解码内容
+      const decodeValue = encode.decode(value);
+      if(decodeValue == `data: [DONE]`){
+        break
+      }
+      const data = JSON.parse(decodeValue.split('data: ')[1]);
+      const text = data.choices[data.choices.length-1].delta.content
+      allText += text
+      // 输出内容
+        console.log('text',text);
+        
+        app.innerHTML= converter.makeHtml()
+
+        hljs.highlightAll();
+    }
+
+  }
+  function send() {
+    console.log('开始获取----------');
+    let url = BASE_URL+'/see';
+    getData('http://localhost:3000/sse')
+
+  }
+  function abortFetch() {
+    console.log('结束获取----------');
+    controller.abort();
+  }
+  function htmlEscape(str) { //字符转义
+var escapesMap = {
+'<': '&lt;',
+'>': '&gt;',
+'"': '&quot;',
+"'": '&#039;'
+},
+reUnescapedHtml = new RegExp(/[<>"']/g);
+return (str && reUnescapedHtml.test(str)) ? str.replace(reUnescapedHtml, function(chr) {
+return escapesMap[chr];
+}) : (str || "");
+}
+
+</script>
+</html>
