@@ -1,13 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-// 
+const path = require('path');
 
 const app = express();
-const port = 3000;
-
+const port = 3086;
+app.use(express.static(path.join(__dirname, 'public'))); //指定静态文件目录
 // 设置cors
 app.use(cors());
-
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
 app.post('/sse', (req, res) => {
   res.set({
     'Content-Type': 'text/event-stream', // 设置SSE
